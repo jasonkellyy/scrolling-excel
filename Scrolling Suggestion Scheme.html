@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Fake Scrolling Excel</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    #frameWrapper {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+    iframe {
+      width: 100%;
+      height: 200%; /* make iframe taller than the container */
+      border: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="frameWrapper">
+    <iframe id="excelFrame" src="https://mccolgansfoodsltd.sharepoint.com/sites/suggestionscheme/_layouts/15/Doc.aspx?sourcedoc={26e268e8-dbc4-4072-a466-0bd8cf5bb0e7}&action=embedview&wdAllowInteractivity=False&wdHideGridlines=True&wdHideHeaders=True&wdDownloadButton=True"></iframe>
+  </div>
+
+  <script>
+    const iframe = document.getElementById('excelFrame');
+    let pos = 0;
+    let direction = 1; // 1 = down, -1 = up
+    const speed = 0.025; // slightly slower than 0.1
+    function animate() {
+      pos += direction * speed;
+      if (pos > 100) direction = -1;   // scroll back up
+      if (pos < 0) direction = 1;      // scroll back down
+      iframe.style.top = -pos + "%";
+      requestAnimationFrame(animate);
+    }
+    animate();
+  </script>
+</body>
+</html>
+
